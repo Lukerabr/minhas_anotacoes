@@ -6,6 +6,10 @@ import 'package:path/path.dart';
 class AnotacaoHelper {
 
   static final String nomeTabela = "anotacao";
+  static final String colunaId = "id";
+  static final String colunaTitulo = "titulo";
+  static final String colunaDescicao = "descricao";
+  static final String colunaData = "data";
   static final AnotacaoHelper _anotacaoHelper = AnotacaoHelper._internal();
 
   //adicionado ? pois estava dizendo que uma instancia não nula precisava ser instanciada.
@@ -52,6 +56,15 @@ class AnotacaoHelper {
     var bancoDados = await db;
     int resultado = await bancoDados.insert(nomeTabela, anotacao.toMap());
     return resultado;
+
+  }
+
+  recuperarAnotacoes() async {
+
+    var bancoDados = await db;
+    String sql = "SELECT * FROM $nomeTabela ORDER BY data DESC";
+    List anotacoes =  await bancoDados.rawQuery(sql);
+    return anotacoes;
 
   }
   
